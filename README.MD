@@ -1,1 +1,13 @@
-README.MD
+Here is a description of this project:
+
+It is a new project.
+
+Random Link - https://en.wikipedia.org/wiki/Food
+
+Best fruits (opinion):
+1- Mango
+2- Pineapple
+3- Wild Blueberries 
+
+Subsection:
+I’m a student at the University of Wisconsin–Madison, creating this as part of my J677 class. We’re learning how to use GitHub! You might be wondering, why the hell is a journalism student doing anything coding-related? Well, first — that’s a terrible take. Journalism today relies heavily on data analysis and visualization to tell better stories. And second — this class is part of the curriculum for the Digital Media Analytics certificate.
