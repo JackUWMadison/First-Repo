@@ -1,0 +1,145 @@
+---
+title: "HW#5"
+author: "Jack Barske"
+date: "2025-03-05"
+output: html_document
+---
+```{r setup, include=FALSE}
+library(ggplot2)
+library(nycflights13)
+library(dplyr)
+library(tidyr)
+library(tibble)
+```
+
+### Q1
+
+```{r, echo=FALSE}
+ggplot(mtcars, aes(x = factor(cyl))) +
+  geom_bar(fill = "skyblue", color = "black") +
+  labs(x = "Cylinders", y = "Count") +
+  theme_minimal()
+```
+
+### Q2
+
+```{r histogram, echo=FALSE}
+ggplot(iris, aes(x = Sepal.Length)) +
+  geom_histogram(bins = 20, fill = "pink", color = "black") +
+  labs(x = "Sepal.Length", y = "Count") +
+  theme_minimal()
+```
+
+### Q3 
+
+```{r summarize_mpg, echo=FALSE}
+library(dplyr)
+
+mtcars %>%
+  group_by(gear, cyl) %>%
+  summarize(mean_mpg = mean(mpg, na.rm = TRUE), .groups = "drop")
+```
+
+### Q4
+
+```{r q4, echo=FALSE}
+library(tidyr)
+library(dplyr)
+
+airquality_long <- airquality %>%
+  pivot_longer(cols = c(Ozone, Solar.R, Wind, Temp), 
+               names_to = "variable", values_to = "value")
+
+head(airquality_long)
+```
+
+### Q5
+
+```{r, echo=FALSE, message=FALSE}
+airquality_wide <- airquality_long %>%
+  pivot_wider(names_from = "variable", values_from = "value")
+
+head(airquality_wide)
+```
+
+### Q6
+
+
+```{r}
+library(tibble)
+
+students <- tibble(
+  Name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+  Age = c(20, 22, 21, 23, 22),
+  Score = c(90, 92, 88, 93, 86)
+)
+
+students
+```
+
+### Q7
+
+```{r q7, echo=FALSE}
+library(dplyr)
+library(ggplot2)
+
+mtcars %>%
+  select(mpg, hp, wt, cyl) %>%
+  filter(mpg > 20) %>%
+  arrange(hp) %>%
+  ggplot(aes(x = wt, y = hp, color = factor(cyl))) +
+  geom_point() +
+  labs(x = "wt", y = "hp", color = "cyl") +
+  theme_minimal()
+```
+
+### Q8
+#### Note I used dataset "starwarsdb" instead of "starwawrs" like you said in the assignment as I could not find that dataset. I assume that was an error and you meant this dataset as it looks like your example???
+
+```{r, echo=FALSE, message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(starwarsdb)
+
+starwars %>%
+  filter(!is.na(mass) & !is.na(height)) %>%
+  filter(mass > 100, height > 200) %>%
+  arrange(desc(height)) %>%
+  ggplot(aes(x = reorder(name, height), y = height)) +
+  geom_bar(stat = "identity", fill = "orange") +
+  labs(x = "Character", y = "Height") +
+  theme_minimal()
+```
+
+### Q9
+
+```{r, echo=FALSE, message=FALSE}
+library(nycflights13)
+library(dplyr)
+library(ggplot2)
+
+flights %>%
+  mutate(speed = distance / (air_time / 60)) %>%
+  filter(distance > 2000, speed > 500) %>%
+  select(carrier, flight, origin, dest, speed, distance) %>%
+  ggplot(aes(x = speed, y = distance, color = carrier)) +
+  geom_point() +
+  labs(x = "Speed (mph)", y = "Distance (miles)") +
+  theme_minimal()
+```
+
+### Q10
+
+```{r, echo=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+
+diamonds %>%
+  group_by(cut) %>%
+  summarize(avg_price = mean(price, na.rm = TRUE)) %>%
+  arrange(desc(avg_price)) %>%
+  ggplot(aes(x = reorder(cut, avg_price), y = avg_price, fill = cut)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Cut", y = "Average Price") +
+  theme_minimal()
+```
